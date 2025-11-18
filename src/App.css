@@ -1,42 +1,531 @@
+/* --- New Body Style with Animated Background --- */
+@keyframes move-twinkle-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  /* New Super-dark background */
+  background: #0f0f0f;
+  color: var(--text);
+  
+  /* This adds the animated "stars" */
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation: move-twinkle-back 200s linear infinite;
+}
+
+
+/* --- Reset & Base Styles --- */
+:root {
+  --background: #1a1a1a;
+  --surface: #242424;
+  --primary: #7c3aed; /* A nice purple */
+  --primary-hover: #6d28d9;
+  --text: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+}
+
+/* --- New "Page" Card Layout --- */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  position: relative;
+  isolation: isolate;
+  max-width: 1100px;
   text-align: center;
+  
+  /* --- This is the new "Page" effect --- */
+  background-color: var(--background); /* Your old #1a1a1a */
+  border: 1px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+  margin: 3rem auto; /* Give it space from the top/bottom */
+  
+  /* This makes the footer stick to the bottom */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 6rem); /* Full height minus margins */
+}
+/* Add this anywhere in App.css, preferably near #root styles */
+
+.app-container {
+  width: 100%;
+  min-height: 100%; /* Ensures it fills the parent */
+  display: flex;
+  flex-direction: column; /* Stacks Navbar, Content, Footer vertical */
+  border-radius: 12px; /* Matches your card radius */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* This new class holds all your page content */
+.page-container {
+  /* THIS IS THE ALIGNMENT FIX */
+  padding: 4rem 2rem 2rem 2rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* This is the wrapper for page content */
+.page-content-wrapper {
+  flex: 1; /* This pushes the footer down */
+}
+
+/* --- Re-usable Button Styles --- */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+.cta-button.primary {
+  background-color: var(--primary);
+  color: white;
+}
+.cta-button.primary:hover {
+  background-color: var(--primary-hover);
+  /* THIS IS THE ANIMATION WE ARE COPYING */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+.cta-button.secondary {
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid #444;
+}
+.cta-button.secondary:hover {
+  background-color: #333;
+  border-color: #777;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+
+/* --- FIXED STICKY "GLASS" NAVBAR --- */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  
+  position: sticky;
+  top: 0; /* Stick to the top of the #root */
+  z-index: 100;
+  
+  /* This creates the blur effect */
+  background-color: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  border-bottom: 1px solid #333;
+  
+  /* Make it match the new page */
+  border-radius: 12px 12px 0 0;
+}
+
+/* This styles your "Chezhiyan ✧" text */
+.nav-brand-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-brand-text:hover {
+  color: var(--primary);
+}
+.nav-brand-text span {
+  color: var(--primary);
+}
+
+nav .nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+/* --- THIS IS THE NEW NAVBAR LINK CODE --- */
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+/* This is your new "active tab" color! */
+.nav-link.active {
+  color: var(--primary);
+}
+
+/* --- Hero Section --- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  text-align: left;
+  /* THIS IS THE FIX: margin-top REMOVED */
+  margin-bottom: 6rem;
+}
+.hero-text h1 {
+  font-size: 3.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.hero-name {
+  background: -webkit-linear-gradient(45deg, var(--primary), #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-text h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+.hero-bio {
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+.social-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.social-links a {
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+.social-links a:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+}
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+/* --- Hero Image Styles (RESTORED) --- */
+.hero-image-container {
+  flex-shrink: 0;
+}
+
+.hero-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--primary);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.4);
+}
+
+/* --- Section Titles --- */
+.section-title {
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+  border-bottom: 3px solid var(--primary);
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+/* --- Project Card Styles (For your 'Projects' page) --- */
+/* THIS IS THE MISSING STYLE FOR YOUR PROJECT GRID */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto 6rem;
+}
+
+.project-card {
+  background: var(--surface);
+  padding: 0;
+  border-radius: 8px;
+  text-align: left;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: all 0.3s ease-out;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+.project-card-content {
+  padding: 1.5rem;
+}
+.project-card-content h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+.project-card-content p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+.project-tags {
+  display: flex;
+  gap: 0.5rem;
+}
+.project-tag {
+  background: var(--primary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: white;
+}
+
+/* --- NEW Clean Contact Page Styles --- */
+.contact-clean {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.contact-clean p {
+  color: var(--text-secondary);
+  max-width: 500px;
+  font-size: 1.1rem;
+}
+.contact-info-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  font-weight: 500;
+  transition: all 0.3s ease-out;
+}
+.contact-info-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+.contact-info-item svg {
+  color: var(--primary);
+}
+
+
+/* --- Responsive Fix (for small screens) --- */
+@media (max-width: 768px) {
+  #root {
+    margin: 1rem auto;
+    min-height: calc(100vh - 2rem);
   }
-  to {
-    transform: rotate(360deg);
+  
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-text {
+    align-items: center;
+  }
+  
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    position: static; /* Un-stick nav on mobile */
+    border-radius: 12px; /* Round all corners */
+  }
+  
+  .page-container {
+    padding: 2rem 1rem 1rem 1rem; /* Add top padding for mobile */
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* =================================================
+   UPDATED SKILLS SECTION (Matches Top Buttons)
+================================================= */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1rem;
+  max-width: 800px; 
+  margin: 0 auto 6rem;
+  perspective: 1000px;
 }
 
-.card {
-  padding: 2em;
+.skill-tile {
+  background: var(--surface);
+  border: 1px solid #333;
+  padding: 1rem 1rem; 
+  border-radius: 8px; 
+  text-align: center;
+  font-size: 1rem; 
+  font-weight: 500;
+  color: var(--text-secondary);
+  
+  /* This ensures the animation speed matches the top button */
+  transition: all 0.3s ease; 
+  cursor: pointer; /* Changed to pointer so it feels like a button */
 }
 
-.read-the-docs {
-  color: #888;
+/* --- HOVER STATE --- */
+.skill-tile:hover {
+  /* 1. Color Change (Matches Primary Button) */
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  
+  /* 2. Animation Physics (Updated from -5px to -2px to match top button) */
+  transform: translateY(-2px);
+  
+  /* 3. Glow/Shadow (Exact match to top button) */
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+/* --- OPTIONAL: ACTIVE STATE --- */
+/* Add the class "active" to a button in your React code if you want it to STAY purple like in the video */
+.skill-tile.active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+/* --- Academic Section --- */
+.academics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto 6rem;
+}
+.academic-card {
+  background: var(--surface);
+  border: 1px solid #333;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: left;
+  transition: all 0.3s ease-out;
+}
+.academic-card:hover {
+  background: #333;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+.academic-icon { 
+  color: var(--primary); 
+  margin-bottom: 1rem; 
+}
+.academic-card h3 { 
+  font-size: 1.5rem; 
+  margin: 0 0 0.5rem 0; 
+}
+.academic-college { 
+  color: var(--text-secondary); 
+  margin-bottom: 1rem;
+}
+.academic-years { 
+  font-size: 0.9rem; 
+  font-weight: 500; 
+  color: var(--primary); 
+}
+.academic-cgpa {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1.5rem;
+}
+.academic-skills-list {
+  margin-top: 1rem;
+  border-top: 1px solid #444;
+  padding-top: 1rem;
+}
+.academic-skills-list p {
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+}
+.academic-skills-list ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.academic-skills-list li {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+
+/* =================================================
+=== NEW FOOTER & SCROLL-TO-TOP STYLES ===
+=================================================
+*/
+
+/* --- Footer Styles --- */
+/* In src/App.css */
+
+.footer {
+  padding: 2rem 1rem;
+  background-color: var(--surface); 
+  border-top: 1px solid #333;
+  width: 100%;
+  
+  /* --- ADD THIS LINE TO FIX ALIGNMENT --- */
+  box-sizing: border-box; 
+  /* ------------------------------------ */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0 0 12px 12px;
+}
+.footer-links {
+  display: none; /* Hide links, we just want copyright */
+}
+
+.footer p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* --- Scroll to Top Button --- */
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+}
+
+.scroll-button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+  transition: all 0.3s ease;
+}
+
+.scroll-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-3px);
 }
